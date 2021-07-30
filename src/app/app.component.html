@@ -15,3 +15,18 @@
     </div>
   </div>
 </div>
+
+<div class="container">
+  <div class="col-xs-12">
+    <app-game-control
+    (gameEmitter)="onGameEmit($event)"
+    >
+    </app-game-control>
+    <div *ngFor="let value of values">
+      <app-even *ngIf="value %2 === 0; else oddRef" [value]="value"></app-even>
+      <ng-template #oddRef>
+        <app-odd  [value]="value"></app-odd>
+      </ng-template>
+    </div>
+  </div>
+</div>
