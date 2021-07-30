@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-servers',
@@ -8,6 +8,8 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./servers.component.css']
 })
 export class ServersComponent implements OnInit {
+
+  @ViewChild('serverContentInput', {static: true}) serverContentInput: ElementRef;
   allowNewServer = false;
   serverCreationStatus = 'No Server was created!'
   serverName = '';
@@ -24,6 +26,7 @@ export class ServersComponent implements OnInit {
   }
 
   onCreateServer(server: HTMLInputElement) {
+    alert(this.serverContentInput.nativeElement.value);
     this.serverCreated = true;
     this.servers.push(server.value);
     this.serverCreationStatus = 'Server was created! Name is' + server.value;
