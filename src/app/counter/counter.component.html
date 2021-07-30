@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="col-xs-6">
+    <app-counter-actions
+      (onValueChange)="onModify($event)"
+      (onReset)="onReset()">
+    </app-counter-actions>
+  </div>
+  <div class="col-xs-6">
+    <app-counter-view [counter]="count"></app-counter-view>
+  </div>
+</div>
