@@ -1,15 +1,26 @@
 <div class="container">
   <div class="row">
-    <div class="col-xs-12">
-      <h3 class="text-center">I'm the app component</h3>
-      <hr>
-      <app-counter></app-counter>
-      <hr>
-            <app-servers></app-servers>
-      <!--      <div app-servers></div>-->
-<!--      <div class="app-servers"></div>-->
-      <app-warning-alert></app-warning-alert>
-      <app-success-alert></app-success-alert>
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <ul class="nav nav-tabs">
+        <li role="presentation" class="active"><a href="#">Home</a></li>
+        <li role="presentation"><a href="#">Servers</a></li>
+        <li role="presentation"><a href="#">Users</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <app-home></app-home>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <app-users></app-users>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <app-servers></app-servers>
     </div>
   </div>
 </div>
