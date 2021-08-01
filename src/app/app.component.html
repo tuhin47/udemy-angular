@@ -49,6 +49,19 @@
           >
           </textarea>
         </div>
+        <p>Your reply:{{answer}}</p>
+        <div class="radio" *ngFor="let gen of genders">
+          <label>
+            <input
+              type="radio"
+              name="gender"
+              ngModel
+              [value]="gen"
+              required
+            >
+            {{gen}}
+          </label>
+        </div>
         <button
           [disabled]="!f.valid"
           class="btn btn-primary"

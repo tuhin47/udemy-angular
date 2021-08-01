@@ -18,6 +18,7 @@ export class AppComponent {
   }*/
   defaultQuestion = 'pet';
   answer: string = 'default';
+  genders = ['Male', 'Female'];
 
   onSubmit() {
     console.log(this.form);
