@@ -28,5 +28,6 @@ export class AppComponent {
 
   onSubmit() {
     console.log(this.signUpForm);
+    this.signUpForm.resetForm();
   }
 }
