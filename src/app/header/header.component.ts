@@ -5,9 +5,5 @@ import {Component, Output, EventEmitter} from "@angular/core";
   templateUrl: './header.component.html'
 })
 export class HeaderComponent {
-  @Output() featureEmit = new EventEmitter<string>();
 
-  onListSelect(feature: string) {
-    this.featureEmit.emit(feature);
-  }
 }
