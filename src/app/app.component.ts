@@ -16,6 +16,8 @@ export class AppComponent {
   /*onSubmit(form: NgForm) {
     console.log(form);
   }*/
+  defaultQuestion = 'pet';
+
   onSubmit() {
     console.log(this.form);
   }
