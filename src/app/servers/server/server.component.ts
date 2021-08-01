@@ -16,12 +16,15 @@ export class ServerComponent implements OnInit {
               private route :ActivatedRoute) { }
 
   ngOnInit() {
-    const id = +this.route.snapshot.params['id'];
+    this.route.data.subscribe(
+      data => this.server = data['server']
+    );
+    /*const id = +this.route.snapshot.params['id'];
     this.server = this.serversService.getServer(id);
     this.route.params
       .subscribe(
         params => this.server = this.serversService.getServer(+params['id'])
-      );
+      );*/
   }
 
   onEdit() {
