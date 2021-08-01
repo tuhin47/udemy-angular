@@ -7,7 +7,5 @@ import {Component} from '@angular/core';
 })
 export class AppComponent {
   featureLoaded = 'recipe';
-  featureSelection(feature: string) {
-    this.featureLoaded = feature;
-  }
+
 }
