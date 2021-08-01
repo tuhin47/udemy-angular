@@ -4,7 +4,7 @@ export class AuthService{
   isAuthenticated() {
     return  new Promise(
       ((resolve, reject) => {
-        setTimeout(() => resolve(this.loggedIn), 4000);
+        setTimeout(() => resolve(this.loggedIn), 2000);
       })
     )
 
