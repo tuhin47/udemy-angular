@@ -17,6 +17,7 @@ export class AppComponent {
     console.log(form);
   }*/
   defaultQuestion = 'pet';
+  answer: string = 'default';
 
   onSubmit() {
     console.log(this.form);
