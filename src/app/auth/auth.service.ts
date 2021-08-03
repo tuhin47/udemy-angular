@@ -10,7 +10,7 @@ export interface AuthResponseData {
   idToken: string;
   email: string;
   refreshToken: string;
-  expiredIn: string;
+  expiresIn: string;
   localId: string;
   registered?: boolean;
 }
@@ -35,7 +35,7 @@ export class AuthService {
       }
     ).pipe(
       catchError(AuthService.handleError),
-      tap(this.handleAuthentication)
+      tap(data => this.handleAuthentication(data))
     );
   }
 
@@ -49,14 +49,14 @@ export class AuthService {
       }
     ).pipe(
       catchError(AuthService.handleError),
-      tap(this.handleAuthentication)
+      tap(data => this.handleAuthentication(data))
     );
   }
 
   private handleAuthentication(res: AuthResponseData) {
-    const expirationData = new Date(new Date().getTime() + +res.expiredIn * 1000);
-    const user = new User(res.email, res.localId, res.idToken, expirationData);
-    this.user.next(user);
+    const expirationData = new Date(new Date().getTime() + Number(res.expiresIn) * 1000);
+    const userModel = new User(res.email, res.localId, res.idToken, expirationData);
+    this.user.next(userModel);
   }
 
   private static handleError(errorRes: HttpErrorResponse) {

@@ -9,13 +9,15 @@
 
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li routerLinkActive="active"><a routerLink="/recipes">Recipes</a></li>
-        <li routerLinkActive="active"><a routerLink="/auth">Authentication</a></li>
+        <li *ngIf="isAuthenticated" routerLinkActive="active"><a routerLink="/recipes">Recipes</a></li>
+        <li *ngIf="!isAuthenticated" routerLinkActive="active"><a routerLink="/auth">Authentication</a></li>
         <li routerLinkActive="active"><a routerLink="/shopping-list">Shopping list</a></li>
       </ul>
-      <ul class="nav navbar-nav navbar-right">
+      <ul *ngIf="isAuthenticated" class="nav navbar-nav navbar-right">
+        <li><a href="javascript:" style="cursor: pointer">Logout</a></li>
         <li class="dropdown" appDropdown>
-          <a href="javascript:"  style="cursor: pointer" class="dropdown-toggle" role="button">Manage <span class="caret"></span></a>
+          <a href="javascript:" style="cursor: pointer" class="dropdown-toggle" role="button">Manage <span
+            class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="javascript:" style="cursor: pointer" (click)="onSaveData()">Save Data</a></li>
             <li><a href="javascript:" style="cursor: pointer" (click)="onFetchData()">Fetch Data</a></li>
