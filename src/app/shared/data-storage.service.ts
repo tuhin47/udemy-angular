@@ -19,25 +19,19 @@ export class DataStorageService {
   }
 
   fetchRecipes() {
-    return this.authService.user.pipe(
-      take(1),
-      exhaustMap(user => {
-        return this.http.get<Recipe[]>('https://udemy-angular-b1e4c-default-rtdb.asia-southeast1.firebasedatabase.app/recipes.json',
-          {
-            params: new HttpParams().set('auth', user.token)
-          })
-      }),
-      map(recipes => {
-        return recipes.map(r => {
-          return {
-            ingredients: [],
-            ...r
-          }
-        });
-      }),
-      tap(recipes => {
-        this.recipeService.setRecipes(recipes);
-      })
-    )
+    return this.http.get<Recipe[]>('https://udemy-angular-b1e4c-default-rtdb.asia-southeast1.firebasedatabase.app/recipes.json')
+      .pipe(
+        map(recipes => {
+          return recipes.map(r => {
+            return {
+              ingredients: [],
+              ...r
+            }
+          });
+        }),
+        tap(recipes => {
+          this.recipeService.setRecipes(recipes);
+        })
+      )
   }
 }
