@@ -6,6 +6,7 @@ import {finalize} from "rxjs/operators";
 import {Observable, Subscription} from "rxjs";
 import {AlertComponent} from "../shared/alert/alert.component";
 import {PlaceholderDirective} from "../shared/placeholder/placeholder.directive";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-auth',
@@ -20,6 +21,7 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   constructor(private authService: AuthService,
               private componentFactoryResolver: ComponentFactoryResolver,
+              private toastrService:ToastrService,
               private router: Router) {
 
   }
@@ -60,11 +62,13 @@ export class AuthComponent implements OnInit, OnDestroy {
       .subscribe(
         response => {
           console.log(response);
-          this.router.navigate(['/recipes']);
+          this.toastrService.success('Success', 'Hukka');
+          setTimeout(() => this.router.navigate(['/recipes']), 2000);
         },
         error => {
           console.error(error)
           this.error = error;
+          this.toastrService.error(error, "Failed");
           this.showErrorAlert(error);
         },
       )
