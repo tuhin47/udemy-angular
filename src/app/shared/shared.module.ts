@@ -22,7 +22,11 @@ import {DropdownDirective} from "./dropdown.directive";
     PlaceholderDirective,
     DropdownDirective,
     CommonModule
-  ]
+  ],
+  /*,
+ entryComponents:[
+   AlertComponent // angular 9 or lower
+ ]*/
 })
 export class SharedModule {
 }
