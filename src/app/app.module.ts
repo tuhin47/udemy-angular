@@ -6,10 +6,7 @@ import {HeaderComponent} from "./header/header.component";
 import {AppRoutingModule} from "./app-routing.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {GlobalConfig, ToastrModule} from "ngx-toastr";
-import {RecipesModule} from "./recipes/recipes.module";
-import {ShoppingListModule} from "./shopping-list/shopping-list.module";
 import {MyCoreModule} from "./my-core.module";
-import {AuthModule} from "./auth/auth.module";
 
 const toasterConfig: Partial<GlobalConfig> = {
   positionClass: 'toast-top-right',
@@ -26,10 +23,7 @@ const toasterConfig: Partial<GlobalConfig> = {
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    RecipesModule,
-    ShoppingListModule,
     MyCoreModule,
-    AuthModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(toasterConfig)
   ],
