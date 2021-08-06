@@ -7,7 +7,7 @@ export interface State {
   editedIngredientIndex: number;
 }
 
-export interface AppState{
+export interface AppState {
   shoppingList: State;
 }
 
@@ -21,7 +21,7 @@ const initialState: State = {
 };
 
 export function shoppingListReducer(
-  state:State = initialState,
+  state: State = initialState,
   action: ShoppingListActions.ShoppingListActions
 ) {
   switch (action.type) {
@@ -36,17 +36,36 @@ export function shoppingListReducer(
         ingredients: [...state.ingredients, ...action.payload as Ingredient[]]
       }
     case ShoppingListActions.UPDATE_INGREDIENT:
-      let ingredients = state.ingredients;
-      const payload = action.payload as { index: number, ingredient: Ingredient; };
-      ingredients[payload.index] = payload.ingredient;
+      const ingredient = state.ingredients[state.editedIngredientIndex];
+      const updatedIngredient ={
+        ...ingredient,
+        ...action.payload
+      }
+      const updatedIngredients :Ingredient[]= [...state.ingredients];
+      updatedIngredients[state.editedIngredientIndex] = updatedIngredient;
       return {
         ...state,
-        ingredients: ingredients
+        ingredients: updatedIngredients
       }
     case ShoppingListActions.DELETE_INGREDIENT:
       return {
         ...state,
-        ingredients: state.ingredients.splice(action.payload as number, 1)
+        ingredients: state.ingredients.filter((ing, index) => index != state.editedIngredientIndex)
+      }
+    case ShoppingListActions.START_EDIT:
+      const editedIngredientIndex = action.payload as number;
+      return {
+        ...state,
+        editedIngredientIndex: editedIngredientIndex,
+        editedIngredient: {
+          ...state.ingredients[editedIngredientIndex]
+        }
+      }
+    case ShoppingListActions.STOP_EDIT:
+      return{
+        ...state,
+        editedIngredient:null,
+        editedIngredientIndex: -1
       }
     default:
       return state;
