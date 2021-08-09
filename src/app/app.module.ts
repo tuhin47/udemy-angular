@@ -8,8 +8,9 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {GlobalConfig, ToastrModule} from "ngx-toastr";
 import {MyCoreModule} from "./my-core.module";
 import {StoreModule} from '@ngrx/store';
-import {shoppingListReducer} from "./shopping-list/store/shopping-list.reducer";
 import {SharedModule} from "./shared/shared.module";
+import * as fromApp from "./store/app.reducer";
+
 
 const toasterConfig: Partial<GlobalConfig> = {
   positionClass: 'toast-top-right',
@@ -29,7 +30,7 @@ const toasterConfig: Partial<GlobalConfig> = {
     MyCoreModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(toasterConfig),
-    StoreModule.forRoot({shoppingList: shoppingListReducer}, {}),
+    StoreModule.forRoot(fromApp.appReducer),
     SharedModule
   ],
   bootstrap: [AppComponent]
