@@ -12,6 +12,8 @@ import {SharedModule} from "./shared/shared.module";
 import * as fromApp from "./store/app.reducer";
 import { EffectsModule } from '@ngrx/effects';
 import {AuthEffects} from "./auth/store/auth.effect";
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 
 
 const toasterConfig: Partial<GlobalConfig> = {
@@ -34,7 +36,8 @@ const toasterConfig: Partial<GlobalConfig> = {
     ToastrModule.forRoot(toasterConfig),
     StoreModule.forRoot(fromApp.appReducer),
     SharedModule,
-    EffectsModule.forRoot([AuthEffects])
+    EffectsModule.forRoot([AuthEffects]),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],
   bootstrap: [AppComponent]
 })
