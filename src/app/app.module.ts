@@ -10,6 +10,8 @@ import {MyCoreModule} from "./my-core.module";
 import {StoreModule} from '@ngrx/store';
 import {SharedModule} from "./shared/shared.module";
 import * as fromApp from "./store/app.reducer";
+import { EffectsModule } from '@ngrx/effects';
+import {AuthEffects} from "./auth/store/auth.effect";
 
 
 const toasterConfig: Partial<GlobalConfig> = {
@@ -31,7 +33,8 @@ const toasterConfig: Partial<GlobalConfig> = {
     BrowserAnimationsModule,
     ToastrModule.forRoot(toasterConfig),
     StoreModule.forRoot(fromApp.appReducer),
-    SharedModule
+    SharedModule,
+    EffectsModule.forRoot([AuthEffects])
   ],
   bootstrap: [AppComponent]
 })
