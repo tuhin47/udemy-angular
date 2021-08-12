@@ -1,5 +1,5 @@
 import {User} from '../user.model';
-import {AuthActions, Login, LOGIN, LOGIN_FAIL, LOGIN_START, LoginFail, LOGOUT} from "./auth.actions";
+import {AuthActions, AuthenticateSuccess, AUTHENTICATE_SUCCESS, AUTHENTICATE_FAIL, LOGIN_START, AuthenticateFail, LOGOUT} from "./auth.actions";
 
 export interface State {
   user: User;
@@ -17,8 +17,8 @@ export function authReducer(
   state = initialState,
   action: AuthActions): State {
   switch (action.type) {
-    case LOGIN:
-      if (action instanceof Login) {
+    case AUTHENTICATE_SUCCESS:
+      if (action instanceof AuthenticateSuccess) {
         const user = new User(
           action.payload.email,
           action.payload.userId,
@@ -41,8 +41,8 @@ export function authReducer(
         authError: null,
         loading:true,
       };
-    case LOGIN_FAIL:
-      if (action instanceof LoginFail) {
+    case AUTHENTICATE_FAIL:
+      if (action instanceof AuthenticateFail) {
         return {
           ...state,
           authError: action.payload,
