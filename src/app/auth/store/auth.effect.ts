@@ -7,6 +7,7 @@ import * as AuthActions from "./auth.actions";
 import {environment} from "../../../environments/environment";
 import {catchError, map, switchMap, tap} from "rxjs/operators";
 import {User} from "../user.model";
+import {AuthService} from "../auth.service";
 
 
 export interface AuthResponseData {
@@ -64,6 +65,9 @@ export class AuthEffects {
             returnSecureToken: true
           }
         ).pipe(
+          tap(resData=>{
+            this.authService.setLogoutTimer(+resData.expiresIn * 1000);
+          }),
           map(resData => handleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn)),
           catchError((errorRes) => handleError(errorRes)),
         )
@@ -93,7 +97,7 @@ export class AuthEffects {
 
   @Effect({dispatch: false})
   authRedirect = this.actions$.pipe(
-    ofType(AuthActions.AUTHENTICATE_SUCCESS, AuthActions.LOGOUT),
+    ofType(AuthActions.AUTHENTICATE_SUCCESS),
     tap(() => {
       this.router.navigate(['/']);
     })
@@ -104,6 +108,8 @@ export class AuthEffects {
     ofType(AuthActions.LOGOUT),
     tap(() => {
       localStorage.removeItem('userData');
+      this.authService.clearLogoutTimer();
+      this.router.navigate(['/auth']);
     })
   );
 
@@ -130,6 +136,10 @@ export class AuthEffects {
 
       if (loadedUser.token) {
         // this.user.next(loadedUser);
+        const expirationDuration =
+          new Date(userData._tokenExpirationDate).getTime() -
+          new Date().getTime();
+        this.authService.setLogoutTimer(expirationDuration);
         return new AuthActions.AuthenticateSuccess(
           {
             email: loadedUser.email,
@@ -150,6 +160,7 @@ export class AuthEffects {
 
   constructor(private actions$: Actions,
               private http: HttpClient,
+              private authService: AuthService,
               private router: Router) {
 
   }
