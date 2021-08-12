@@ -1,5 +1,14 @@
 import {User} from '../user.model';
-import {AuthActions, AuthenticateSuccess, AUTHENTICATE_SUCCESS, AUTHENTICATE_FAIL, LOGIN_START, AuthenticateFail, LOGOUT} from "./auth.actions";
+import {
+  AuthActions,
+  AuthenticateSuccess,
+  AUTHENTICATE_SUCCESS,
+  AUTHENTICATE_FAIL,
+  LOGIN_START,
+  AuthenticateFail,
+  LOGOUT,
+  SIGNUP_START, CLEAR_ERROR
+} from "./auth.actions";
 
 export interface State {
   user: User;
@@ -36,10 +45,11 @@ export function authReducer(
         user: null
       };
     case LOGIN_START:
+    case SIGNUP_START:
       return {
         ...state,
         authError: null,
-        loading:true,
+        loading: true,
       };
     case AUTHENTICATE_FAIL:
       if (action instanceof AuthenticateFail) {
@@ -49,6 +59,12 @@ export function authReducer(
           loading:false
         };
       }
+    case  CLEAR_ERROR:
+      return {
+        ...state,
+        authError: null
+      }
+
   }
   return state;
 }
