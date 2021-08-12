@@ -10,10 +10,11 @@ import {MyCoreModule} from "./my-core.module";
 import {StoreModule} from '@ngrx/store';
 import {SharedModule} from "./shared/shared.module";
 import * as fromApp from "./store/app.reducer";
-import { EffectsModule } from '@ngrx/effects';
+import {EffectsModule} from '@ngrx/effects';
 import {AuthEffects} from "./auth/store/auth.effect";
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from '../environments/environment';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {environment} from '../environments/environment';
+import {StoreRouterConnectingModule} from '@ngrx/router-store';
 
 
 const toasterConfig: Partial<GlobalConfig> = {
@@ -37,7 +38,8 @@ const toasterConfig: Partial<GlobalConfig> = {
     StoreModule.forRoot(fromApp.appReducer),
     SharedModule,
     EffectsModule.forRoot([AuthEffects]),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
+    StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
+    StoreRouterConnectingModule.forRoot()
   ],
   bootstrap: [AppComponent]
 })

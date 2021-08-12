@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {RecipeService} from "../recipe.service";
+import {Store} from "@ngrx/store";
+import {AppState} from "../../store/app.reducer";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-recipe-edit',
@@ -19,7 +22,8 @@ export class RecipeEditComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private recipeService: RecipeService) {
+              private recipeService: RecipeService,
+              private store: Store<AppState>) {
 
   }
 
@@ -56,30 +60,39 @@ export class RecipeEditComponent implements OnInit {
     let recipeIngredients = new FormArray([]);
 
     if (this.editMode) {
-      const recipe = this.recipeService.getRecipeById(this.id);
-      recipeName = recipe.name;
-      recipeImagePath = recipe.imagePath;
-      recipeDescription = recipe.description;
-      if (recipe['ingredients']) {
-        for (let ingredient of recipe['ingredients']) {
-          recipeIngredients.push(
-            new FormGroup({
-                'name': new FormControl(ingredient.name,Validators.required),
-                'amount': new FormControl(ingredient.amount,this.amountValidators)
+      this.store.select('recipes')
+        .pipe(
+          map(recipeState => {
+            return recipeState.recipes.find((r, i) => i == this.id);
+          })
+        )
+        .subscribe(
+          recipe => {
+            recipeName = recipe.name;
+            recipeImagePath = recipe.imagePath;
+            recipeDescription = recipe.description;
+            if (recipe['ingredients']) {
+              for (let ingredient of recipe['ingredients']) {
+                recipeIngredients.push(
+                  new FormGroup({
+                      'name': new FormControl(ingredient.name, Validators.required),
+                      'amount': new FormControl(ingredient.amount, this.amountValidators)
+                    }
+                  )
+                )
               }
-            )
-          )
-      }
+            }
+          }
+        );
     }
-  }
 
-  this.recipeForm = new FormGroup({
-    'name': new FormControl(recipeName,Validators.required),
-    'imagePath': new FormControl(recipeImagePath,Validators.required),
-    'description': new FormControl(recipeDescription, Validators.required),
-    'ingredients': recipeIngredients
-  });
-}
+    this.recipeForm = new FormGroup({
+      'name': new FormControl(recipeName, Validators.required),
+      'imagePath': new FormControl(recipeImagePath, Validators.required),
+      'description': new FormControl(recipeDescription, Validators.required),
+      'ingredients': recipeIngredients
+    });
+  }
 
   onAddIngredient() {
     (<FormArray>this.recipeForm.get('ingredients')).push(
@@ -91,7 +104,7 @@ export class RecipeEditComponent implements OnInit {
   }
 
   onCancel() {
-    this.router.navigate(['../'],{relativeTo: this.route})
+    this.router.navigate(['../'], {relativeTo: this.route})
 
   }
 
